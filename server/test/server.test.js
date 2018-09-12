@@ -5,21 +5,26 @@ const {app} = require('./../server')
 const {Todo} = require('./../models/todo')
 
 const todos = [{
-  text: 'First test todo'
+  text: 'First test todo',
+  phone: 234132
 }, {
-  text: 'Second test todo'
+  text: 'Second test todo',
+  phone: 239842
 }];
 
-beforeEach((done) => {
-  Todo.remove({}).then(() => {
-    return Todo.insertMany(todos);
-  }).then(() => done())
-});
+
 
 
 describe('POST/todos', () => {
   it('should create a new todo', (done) => {
-    let text = 'Test todo text'
+
+    beforeEach((done) => {
+      Todo.remove({}).then(() => {
+        return Todo.insertMany(todos);
+      }).then(() => done())
+    });
+    let text = 'Test todo text',
+    phone = 123456
 
     request(app)
       .post('/todos')
@@ -74,7 +79,6 @@ describe('GET /todos', () => {
         expect(res.body.todos.length).toBe(2);
       })
       .end(done)
-
   })
 
 
